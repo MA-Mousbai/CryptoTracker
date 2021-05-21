@@ -1,13 +1,21 @@
 package com.mousbai.cryptotracker.presentation.list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mousbai.cryptotracker.R
+import com.mousbai.cryptotracker.presentation.api.CryptoApi
+import com.mousbai.cryptotracker.presentation.api.CryptoResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -35,13 +43,30 @@ class CryptoListFragment : Fragment() {
             adapter = this@CryptoListFragment.adapter
         }
 
-        val cryptoList = arrayListOf<Crypto>().apply{
-            add(Crypto("Bitcoin"))
-            add(Crypto("Etherium"))
-            add(Crypto("Dogecoin"))
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.lunarcrush.com/v2/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-        }
-        adapter.updateList(cryptoList)
+        val cryptoApi: CryptoApi = retrofit.create(CryptoApi::class.java)
+
+        cryptoApi.getCryptoList().enqueue(object: Callback<CryptoResponse>{
+            override fun onFailure(call: Call<CryptoResponse>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onResponse(call: Call<CryptoResponse>, response: Response<CryptoResponse>
+            ) {
+               if(response.isSuccessful && response.body() != null){
+                   val cryptoResponse = response.body()!!
+                   val dataSorted = cryptoResponse.data.take(100)
+                   adapter.updateList(dataSorted)
+               }
+            }
+
+        })
+
+
 
 
     }

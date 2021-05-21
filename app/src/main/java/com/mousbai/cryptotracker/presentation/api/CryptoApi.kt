@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface CryptoApi {
-    @GET("coins/markets?vs_currency=eur&order=market_cap_desc&per_page=50&page=1&sparkline=false")
-    fun getCryptoList(): Call<List<CryptoResponse>>
+    @GET("?data=meta&key=skv6e856h4hbkncs0msxo&type=price")
+    fun getCryptoList(): Call<CryptoResponse>
 
 }
