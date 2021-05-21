@@ -46,4 +46,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:1.1.0"
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    // Gson Converter
+    implementation 'com.squareup.retrofit2:converter-gson'
+    //API CoinGecko
+    //    implementation('org.drewcarlson:coingecko-jvm:0.1.10')
+    //Ktor Client
+    //implementation("io.ktor:ktor-client-okhttp:1.5.4")
+    //implementation("io.ktor:ktor-client-android:1.5.4")
 }
