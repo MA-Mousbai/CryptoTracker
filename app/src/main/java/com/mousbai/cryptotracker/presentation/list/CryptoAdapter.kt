@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mousbai.cryptotracker.R
 
-class CryptoAdapter(private var dataSet: List<Crypto>) :
+class CryptoAdapter(private var dataSet: List<Crypto>, var listener: ((Crypto) -> Unit)? = null) :
     RecyclerView.Adapter<CryptoAdapter.ViewHolder>() {
 
     /**
@@ -20,6 +20,9 @@ class CryptoAdapter(private var dataSet: List<Crypto>) :
         init {
             // Define click listener for the ViewHolder's View.
             textView = view.findViewById(R.id.crypto_name)
+            textView.setOnClickListener{
+
+            }
         }
     }
 
@@ -44,6 +47,9 @@ class CryptoAdapter(private var dataSet: List<Crypto>) :
         // contents of the view with that element
         val crypto: Crypto = dataSet[position]
         viewHolder.textView.text = crypto.name
+        viewHolder.itemView.setOnClickListener{
+            listener?.invoke(crypto)
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

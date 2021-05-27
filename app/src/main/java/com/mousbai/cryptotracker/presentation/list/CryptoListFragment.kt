@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mousbai.cryptotracker.R
@@ -23,7 +24,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 class CryptoListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private val adapter = CryptoAdapter(listOf())
+    private val adapter = CryptoAdapter(listOf(), ::onClickedCrypto)
+
+    private fun onClickedCrypto(crypto: Crypto) {
+        findNavController().navigate(R.id.navigateToCryptoDetailFragment)
+    }
+
     private val layoutManager = LinearLayoutManager(context)
 
     override fun onCreateView(
@@ -38,6 +44,8 @@ class CryptoListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView = view.findViewById(R.id.crypto_recyclerview)
+
+
         recyclerView.apply {
             layoutManager = this@CryptoListFragment.layoutManager
             adapter = this@CryptoListFragment.adapter
