@@ -3,8 +3,10 @@ package com.mousbai.cryptotracker.presentation.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.mousbai.cryptotracker.R
 
 class CryptoAdapter(private var dataSet: List<Crypto>, var listener: ((Crypto) -> Unit)? = null) :
@@ -16,13 +18,12 @@ class CryptoAdapter(private var dataSet: List<Crypto>, var listener: ((Crypto) -
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
+        val imageView: ImageView
 
         init {
             // Define click listener for the ViewHolder's View.
             textView = view.findViewById(R.id.crypto_name)
-            textView.setOnClickListener{
-
-            }
+            imageView = view.findViewById(R.id.crypto_image)
         }
     }
 
@@ -50,6 +51,12 @@ class CryptoAdapter(private var dataSet: List<Crypto>, var listener: ((Crypto) -
         viewHolder.itemView.setOnClickListener{
             listener?.invoke(crypto)
         }
+
+        Glide
+            .with(viewHolder.itemView.context)
+            .load(crypto.image)
+            .centerCrop()
+            .into(viewHolder.imageView);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
