@@ -17,9 +17,9 @@
     </fragment>
     <fragment
         android:id="@+id/CryptoDetailFragment"
-        android:name="com.mousbai.cryptotracker.SecondFragment"
+        android:name="com.mousbai.cryptotracker.presentation.detail.CryptoDetailFragment"
         android:label="Second Fragment"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_crypto_detail">
 
         <action
             android:id="@+id/navigateToCryptoListFragment"

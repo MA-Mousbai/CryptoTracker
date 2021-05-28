@@ -9,8 +9,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mousbai.cryptotracker.R
+import com.mousbai.cryptotracker.presentation.Singletons
 import com.mousbai.cryptotracker.presentation.api.CryptoApi
-import com.mousbai.cryptotracker.presentation.api.CryptoResponse
+import com.mousbai.cryptotracker.presentation.api.CryptoListResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,7 +31,6 @@ class CryptoListFragment : Fragment() {
         findNavController().navigate(R.id.navigateToCryptoDetailFragment)
     }
 
-    private val layoutManager = LinearLayoutManager(context)
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -42,28 +42,21 @@ class CryptoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         recyclerView = view.findViewById(R.id.crypto_recyclerview)
 
 
         recyclerView.apply {
-            layoutManager = this@CryptoListFragment.layoutManager
+            layoutManager = LinearLayoutManager(context)
             adapter = this@CryptoListFragment.adapter
         }
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.lunarcrush.com/v2/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
-        val cryptoApi: CryptoApi = retrofit.create(CryptoApi::class.java)
-
-        cryptoApi.getCryptoList().enqueue(object: Callback<CryptoResponse>{
-            override fun onFailure(call: Call<CryptoResponse>, t: Throwable) {
+        Singletons.cryptoApi.getCryptoList().enqueue(object: Callback<CryptoListResponse>{
+            override fun onFailure(call: Call<CryptoListResponse>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 
-            override fun onResponse(call: Call<CryptoResponse>, response: Response<CryptoResponse>
+            override fun onResponse(call: Call<CryptoListResponse>, response: Response<CryptoListResponse>
             ) {
                if(response.isSuccessful && response.body() != null){
                    val cryptoResponse = response.body()!!
