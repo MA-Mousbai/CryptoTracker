@@ -18,6 +18,12 @@ Chaque item contient (de gauche à droite) :
 L'application récupère ces données grâce à une API Rest en utilisant Retrofit et stocke ces données en cache (via le cache HTTP)
 Cette application suit l'architecture MVVM.
 
+L'application gère les erreurs en affichant un petit message lorsque l'appel à l'API n'est pas concluant pour X ou Y raisons.
+Il y a également une icône personnalisée sur l'écran d'accueil pour l'application
+
+## Aperçu visuel de l'application
+Ajouter screenshots
+
 ## Auteur
 
 MOUSBAI Mohamed-Ali UFA-3A
