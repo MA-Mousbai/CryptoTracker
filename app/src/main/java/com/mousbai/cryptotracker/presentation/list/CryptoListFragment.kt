@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +29,8 @@ class CryptoListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private val adapter = CryptoAdapter(listOf(), ::onClickedCrypto)
+
+    private val viewModel: CryptoListViewModel by viewModels()
 
     private fun onClickedCrypto(crypto: Crypto) {
         findNavController().navigate(R.id.navigateToCryptoDetailFragment)
@@ -51,22 +55,12 @@ class CryptoListFragment : Fragment() {
             adapter = this@CryptoListFragment.adapter
         }
 
-
-        Singletons.cryptoApi.getCryptoList().enqueue(object: Callback<CryptoListResponse>{
-            override fun onFailure(call: Call<CryptoListResponse>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onResponse(call: Call<CryptoListResponse>, response: Response<CryptoListResponse>
-            ) {
-               if(response.isSuccessful && response.body() != null){
-                   val cryptoResponse = response.body()!!
-                   val dataSorted = cryptoResponse.data.take(100)
-                   adapter.updateList(dataSorted)
-               }
-            }
+        viewModel.cryptoList.observe(viewLifecycleOwner, Observer {list ->
+            adapter.updateList(list)
 
         })
+
+
 
 
 

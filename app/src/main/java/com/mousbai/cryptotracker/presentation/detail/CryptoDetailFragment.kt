@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,7 @@ import com.mousbai.cryptotracker.presentation.Singletons
 import com.mousbai.cryptotracker.presentation.detail.CryptoDetail
 import com.mousbai.cryptotracker.presentation.api.CryptoDetailResponse
 import com.mousbai.cryptotracker.presentation.list.CryptoAdapter
+import com.mousbai.cryptotracker.presentation.list.CryptoListViewModel
 import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,6 +27,8 @@ class CryptoDetailFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private val adapter = CryptoAdapterDetail(listOf())
+
+    private val viewModel: CryptoDetailViewModel by viewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -41,25 +46,13 @@ class CryptoDetailFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = this@CryptoDetailFragment.adapter
         }
-        callApi()
 
-    }
-
-    private fun callApi() {
-        Singletons.cryptoApi.getCryptoDetail().enqueue(object : Callback<CryptoDetailResponse>{
-            override fun onFailure(call: Call<CryptoDetailResponse>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onResponse(call: Call<CryptoDetailResponse>, response: Response<CryptoDetailResponse>) {
-
-                if (response.isSuccessful && response.body() != null) {
-                    val cryptoResponse = response.body()!!
-                    val dataSorted = cryptoResponse.data.take(100)
-                    adapter.updateList(dataSorted)
-                }
-            }
+        viewModel.cryptoList.observe(viewLifecycleOwner, Observer {list ->
+            adapter.updateList(list)
 
         })
+
     }
+
+
 }
