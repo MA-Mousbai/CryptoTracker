@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mousbai.cryptotracker.R
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class CryptoAdapter(private var dataSet: List<Crypto>, var listener: ((Crypto) -> Unit)? = null) :
     RecyclerView.Adapter<CryptoAdapter.ViewHolder>() {
@@ -19,10 +21,12 @@ class CryptoAdapter(private var dataSet: List<Crypto>, var listener: ((Crypto) -
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
         val imageView: ImageView
+        val textViewPrice: TextView
 
         init {
             // Define click listener for the ViewHolder's View.
             textView = view.findViewById(R.id.crypto_name)
+            textViewPrice = view.findViewById(R.id.crypto_price)
             imageView = view.findViewById(R.id.crypto_image)
         }
     }
@@ -48,15 +52,17 @@ class CryptoAdapter(private var dataSet: List<Crypto>, var listener: ((Crypto) -
         // contents of the view with that element
         val crypto: Crypto = dataSet[position]
         viewHolder.textView.text = crypto.name
+        val priceRounded = BigDecimal(crypto.price).setScale(2, RoundingMode.HALF_EVEN)
+        viewHolder.textViewPrice.text = "Price: " + priceRounded.toString() + "$"
         viewHolder.itemView.setOnClickListener{
             listener?.invoke(crypto)
         }
 
-        Glide
-            .with(viewHolder.itemView.context)
-            .load(crypto.image)
-            .centerCrop()
-            .into(viewHolder.imageView);
+       Glide
+           .with(viewHolder.itemView.context)
+           .load("https://icons.bitbot.tools/api/" + crypto.symbol.toLowerCase() + "/32x32")
+           .centerCrop()
+           .into(viewHolder.imageView);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mousbai.cryptotracker.R
 import com.mousbai.cryptotracker.presentation.Singletons
 import com.mousbai.cryptotracker.presentation.api.CryptoApi
+import com.mousbai.cryptotracker.presentation.api.CryptoDetailResponse
 import com.mousbai.cryptotracker.presentation.api.CryptoListResponse
 import retrofit2.Call
 import retrofit2.Callback
