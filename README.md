@@ -22,7 +22,21 @@ L'application gère les erreurs en affichant un petit message lorsque l'appel à
 Il y a également une icône personnalisée sur l'écran d'accueil pour l'application
 
 ## Aperçu visuel de l'application
-Ajouter screenshots
+* Page principale :
+<img src="/screenshots/Main_screen.png" width="25%" height="25%">
+
+* Page de détail :
+<img src="/screenshots/Detail_screen.png" width="25%" height="25%">
+
+* Page de chargement (lors de l'appel API) :
+<img src="/screenshots/Loading_screen.png" width="25%" height="25%">
+
+* Page d'erreur :
+<img src="/screenshots/error_screen.png" width="25%" height="25%">
+
+
+* Icône de l'application :
+<img src="/screenshots/icon_screen.png" width="25%" height="25%">
 
 ## Auteur
 
