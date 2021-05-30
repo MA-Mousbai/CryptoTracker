@@ -34,6 +34,8 @@ Il y a également une icône personnalisée sur l'écran d'accueil pour l'applic
 * Page d'erreur :
 <img src="/screenshots/error_screen.png" width="25%" height="25%">
 
+* Page principale (avec le mode avion -> cache activated) :
+<img src="/screenshots/cache_screen.png" width="25%" height="25%">
 
 * Icône de l'application :
 <img src="/screenshots/icon_screen.png" width="25%" height="25%">
